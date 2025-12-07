@@ -1,4 +1,4 @@
-ascii_symbols = {
+CS2_MARKET_ITEM_URL_NAMES : dict [str, str] = {
   ' ': '%20',
   '%': '%25',
   '&': '%26',
@@ -28,8 +28,9 @@ ascii_symbols = {
   "★" : "%E2%98%85"
 }
 
-async def encode(line: str) -> str:
-    new_line = ""
-    for letter in line:
-        new_line+=ascii_symbols.get(letter,letter) # default for get fallback if no letter in dict
-    return new_line
+async def encode_cs2_item_name(item_name: str) -> str:
+    encoded_name = ""
+    for letter in item_name:
+        encoded_name += CS2_MARKET_ITEM_URL_NAMES.get(letter, letter) # default for get fallback if no letter in dict
+    
+    return encoded_name
