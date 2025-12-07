@@ -1,12 +1,12 @@
 import aiohttp
-import asyncio
+
 from encode_url import encode_cs2_item_name
 import pytest
 
 
 async def scrap(target_item_name: str):
-    line = f"https://steamcommunity.com/market/search/render?norender=1&start=0&count=99&query={target_item_name}"
-
+    line = f"https://steamcommunity.com/market/search/render?norender=1&start=0&count=99&query={target_item_name}"   
+    
     async with aiohttp.ClientSession() as session:
         async with session.get(line) as response:
             print(response.status)
