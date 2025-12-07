@@ -29,7 +29,7 @@ CS2_MARKET_ITEM_URL_NAMES: dict[str, str] = {
 }
 
 
-async def encode_cs2_item_name(item_name: str) -> str:
+def encode_cs2_item_name(item_name: str) -> str:
     encoded_name = ""
     for letter in item_name:
         encoded_name += CS2_MARKET_ITEM_URL_NAMES.get(

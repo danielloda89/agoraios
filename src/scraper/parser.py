@@ -2,33 +2,17 @@ import aiohttp
 
 from encode_url import encode_cs2_item_name
 import pytest
-
+import asyncio
+import json
 
 async def scrap(target_item_name: str):
-    line = f"https://steamcommunity.com/market/search/render?norender=1&start=0&count=99&query={target_item_name}"   
-    
+    line = f"https://steamcommunity.com/market/search/render?&norender=1&start=0&count=99&query={encode_cs2_item_name(target_item_name)}"   
+    line2 = f"https://steamcommunity.com/market/listings/730/{encode_cs2_item_name("M249 | System Lock (Factory New)")}/render?currency=3&start=0"
     async with aiohttp.ClientSession() as session:
         async with session.get(line) as response:
-            print(response.status)
-            data = await response.text()
+            
+            data = await response.json()
+            #print(data["results"][0]["sell_price"])
             print(data)
 
-
-@pytest.mark.asyncio
-async def test_encoding():
-    assert (
-        await encode_cs2_item_name("AK-47 | Redline (Field-Tested)")
-        == "AK-47%20%7C%20Redline%20%28Field-Tested%29"
-    )
-    assert (
-        await encode_cs2_item_name("AWP | Dragon Lore (Factory New)")
-        == "AWP%20%7C%20Dragon%20Lore%20%28Factory%20New%29"
-    )
-    assert (
-        await encode_cs2_item_name("★ Karambit | Doppler (Factory New)")
-        == "%E2%98%85%20Karambit%20%7C%20Doppler%20%28Factory%20New%29"
-    )
-    assert (
-        await encode_cs2_item_name("Dreams & Nightmares Case")
-        == "Dreams%20%26%20Nightmares%20Case"
-    )
+asyncio.run(scrap("Dreams & Nightmares Case"))
